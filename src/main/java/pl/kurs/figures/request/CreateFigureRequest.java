@@ -17,6 +17,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateFigureRequest {
+
     @CheckFigureType
     private String type;
     private Map<String, Double> parameters;

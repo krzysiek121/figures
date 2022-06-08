@@ -2,6 +2,8 @@ package pl.kurs.figures.interfaces;
 
 import pl.kurs.figures.model.Figure;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 public interface FigureCreator {
@@ -14,4 +16,7 @@ public interface FigureCreator {
     default Double getDouble(String parameter, Map<String, Double> parameters) {
        return parameters.get(parameter);
     }
+
+    File drawFigure(Figure figure) throws IllegalAccessException, IOException;
+
 }

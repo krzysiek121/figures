@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,11 +28,19 @@ public class GlobalExceptionHandler {
                                 .build()).collect(Collectors.toList())
                 , HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(FigureIdNotFound.class)
+    public ResponseEntity handleFigureIdNotFound(FigureIdNotFound exc) {
+        return new ResponseEntity(new ErrorIdDto("FIGURE_NOT_FOUND", exc.getId()), HttpStatus.BAD_REQUEST);
+    }
 
     @Value
     @Builder
     static class ErrorDto {
         private String message;
     }
-
+    @Value
+    static class ErrorIdDto {
+        private String message;
+        private int id;
+    }
 }

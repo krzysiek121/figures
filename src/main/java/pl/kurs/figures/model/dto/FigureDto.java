@@ -13,6 +13,7 @@ public class FigureDto {
 
     private int id;
     private String type;
+    private Double area;
     private Map<String, Double> parameters;
 
 }

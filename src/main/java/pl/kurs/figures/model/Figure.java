@@ -23,11 +23,10 @@ public abstract class Figure {
     @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "id")
     private int id;
-    private double area;
     private String username;
     private LocalDateTime dataCreated;
     private String type;
-    //@ElementCollection
-    //private Map<String, Double> parameters;
+    private double area;
     public abstract double getArea();
+    public abstract Map<String, Double> getParameters();
 }
