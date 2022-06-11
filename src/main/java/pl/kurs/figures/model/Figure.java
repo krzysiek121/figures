@@ -1,15 +1,11 @@
 package pl.kurs.figures.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import lombok.*;
-import org.hibernate.annotations.BatchSize;
-import org.springframework.transaction.annotation.Transactional;
-import pl.kurs.figures.request.CreateFigureRequest;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Map;
 
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -17,16 +13,14 @@ import java.util.Map;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class Figure {
+@EntityListeners(AuditingEntityListener.class)
+public abstract class Figure extends Auditable<String>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "id")
     private int id;
-    private String username;
-    private LocalDateTime dataCreated;
     private String type;
-    private double area;
     public abstract double getArea();
     public abstract Map<String, Double> getParameters();
 }

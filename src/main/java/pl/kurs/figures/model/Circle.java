@@ -3,7 +3,6 @@ package pl.kurs.figures.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
@@ -24,6 +23,7 @@ public class Circle extends Figure{
     public double getArea() {
         return radius * radius * Math.PI;
     }
+
 
     @Override
     public Map<String, Double> getParameters() {

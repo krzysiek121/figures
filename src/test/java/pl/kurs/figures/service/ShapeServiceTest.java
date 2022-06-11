@@ -27,12 +27,14 @@ class ShapeServiceTest {
     private ShapeService underTest;
     private FigureRepository figureRepository;
     private FigureFactory figureFactory;
+    private EmailSenderService emailSenderService;
 
     @BeforeEach
     void init() {
         figureFactory = mock(FigureFactory.class);
         figureRepository = mock(FigureRepository.class);
-        underTest = new ShapeService(figureRepository, figureFactory);
+        emailSenderService= mock(EmailSenderService.class);
+        underTest = new ShapeService(figureRepository, figureFactory,emailSenderService);
     }
     @Test
     void shouldCalculateAdditionEquation() throws IllegalAccessException {
@@ -42,10 +44,8 @@ class ShapeServiceTest {
         CreateFigureRequest c1 = new CreateFigureRequest("circle", map);
 
         Circle f2 = new Circle();
-        f2.setDataCreated(LocalDateTime.now());
         f2.setRadius(10.0);
         f2.setType("circle");
-        f2.setUsername("username");
         f2.setId(1);
 
         when(figureRepository.getById(1)).thenReturn(f2);
@@ -81,18 +81,14 @@ class ShapeServiceTest {
         CreateFigureRequest c1 = new CreateFigureRequest("circle", map);
 
         Circle f2 = new Circle();
-        f2.setDataCreated(LocalDateTime.now());
         f2.setRadius(10.0);
         f2.setType("circle");
-        f2.setUsername("username");
         f2.setId(1);
 
         Rectangle f3 = new Rectangle();
-        f3.setDataCreated(LocalDateTime.now());
         f3.setHeight(19.0);
         f3.setWidth(10.0);
         f3.setType("circle");
-        f3.setUsername("username");
         f3.setId(2);
         List<Figure> figures = Arrays.asList(f2,f3);
 
@@ -104,7 +100,3 @@ class ShapeServiceTest {
     }
 }
 
-/*
-joba periodycznego  codziennie o 23:00 i zeby wyslal maila do administrator systemu z iloscia figur ktore zostaly stworzone danego dnia.
-musi być gwarancja wysłania emaila, tylko raz.
- */

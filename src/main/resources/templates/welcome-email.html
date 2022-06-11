@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p>
+    <span> Below list of figures from last day</span>!
+</p>
+
+<p>
+<table id="userTable" border="1">
+    <td>Type</td>
+    <td>ID</td>
+    <td>Parameters</td>
+    <td>Area</td>
+    <tr th:each="figure :${figures}">
+        <td  th:text="${figure.getType()}"></td>
+        <td  th:text="${figure.getId()}"></td>
+        <td  th:text="${figure.getParameters()}"></td>
+        <td  th:text="${figure.getArea().intValue()}"></td>
+    </tr>
+</table>
+
+</body>
+</html>

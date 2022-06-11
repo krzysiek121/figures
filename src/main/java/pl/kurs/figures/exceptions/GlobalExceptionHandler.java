@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
@@ -28,9 +29,16 @@ public class GlobalExceptionHandler {
                                 .build()).collect(Collectors.toList())
                 , HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler(FigureIdNotFound.class)
     public ResponseEntity handleFigureIdNotFound(FigureIdNotFound exc) {
-        return new ResponseEntity(new ErrorIdDto("FIGURE_NOT_FOUND", exc.getId()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(new ErrorIdDto("FIGURE_NOT_FOUND", exc.getId()), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(TooLargeFigureException.class)
+    public ResponseEntity handleTooLargeFigureException(TooLargeFigureException exc) {
+        return new ResponseEntity(new ErrorDtoFigure("PARAMETER_SIZE_TOO_LARGE",
+                exc.getTooLargeParameters()), HttpStatus.BAD_REQUEST);
     }
 
     @Value
@@ -38,9 +46,16 @@ public class GlobalExceptionHandler {
     static class ErrorDto {
         private String message;
     }
+
     @Value
     static class ErrorIdDto {
         private String message;
         private int id;
+    }
+
+    @Value
+    static class ErrorDtoFigure {
+        private String message;
+        private List<String> parameters;
     }
 }
